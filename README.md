@@ -48,17 +48,17 @@ git clone https://github.com/username/SpiderGame.git
 
 ```
 SpiderGame/
-├── Assets/         ← Все файлы тут
+├── Assets/         ← все файлы тут
 │   ├── Audio/          ← персонажи
-│   │   ├── Music/          ← Музыка
-│   │   └── SFX/            ← Эффекты
-│   │   └── Voiecs (TODO)/  ← Возможно будущая озвучка        
+│   │   ├── Music/          ← музыка
+│   │   └── SFX/            ← эффекты
+│   │   └── Voiecs (TODO)/  ← возможно будущая озвучка        
 │   ├── Scripts/        ← C# код
 │   ├── Scenes/         ← сцены игры
 │   ├── Characters/     ← персонажи
-│   │   ├── Franklin/       ← Главнй герой
-│   │   ├── Mary/           ← Один из персонажей
-│   │   └── ... (TODO)/      ← Ещё в разработке
+│   │   ├── Franklin/       ← главнй герой
+│   │   ├── Mary/           ← один из персонажей
+│   │   └── ... (TODO)/      ← ещё в разработке
 │   ├── UI/             ← элементы интерфейса
 ├── Packages/       ← не знаю, что это
 └── ProjectSettings/    ← как и это
@@ -69,6 +69,7 @@ SpiderGame/
 - **Language:** C#
 - **UI:** TextMeshPro
 - **Version Control:** Git + GitHub
+- [**Google Docs:** Сценарий](https://docs.google.com/document/d/18KxeWQ7dCXuG58p8W_8FYP5G5zDITT1RFNmApZqPSMc/edit?tab=t.0)
 - **[Другой инструмент]:** [Допишите используемые инструменты]
 ---
 
