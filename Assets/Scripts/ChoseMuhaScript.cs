@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEngine.Mathf;
 
 public class ChoseMuhaScript : MonoBehaviour
@@ -12,295 +13,324 @@ public class ChoseMuhaScript : MonoBehaviour
     [SerializeField] private GameObject blackScreen;
     [SerializeField] private GameObject textTop;
     [SerializeField] private GameObject textMiddle;
-    [SerializeField] private GameObject textBottom;
+    [SerializeField] private GameObject textBottom;  
     [SerializeField] private GameObject dialogueBar;
     [SerializeField] private GameObject textDialogue;
     [SerializeField] private GameObject characterLeft;
     [SerializeField] private GameObject characterRight;
     [SerializeField] private GameObject buttonGood;
     [SerializeField] private GameObject buttonBad;
+    [SerializeField] private GameObject muhaImage;
     [SerializeField] private Texture2D[] FranklinTextures;
     [SerializeField] private Texture2D[] MaryTextures;
     [SerializeField] private Texture2D[] AnotherMuhaTextures;
     [SerializeField] private Texture2D[] IecheHuhaTextures;
+    [SerializeField] private Texture2D[] MuhaClose;
 
     void Start()
     {
+        buttonGood.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+        { 
+            GameUtils.Instance.beGood();
+        });
 
-        StartCoroutine(PlayMarySequence());
+        buttonBad.GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() =>
+        {
+            GameUtils.Instance.beBad();
+        });
+
+        muhaImage.GetComponent<RawImage>().texture = MuhaClose[GameData.muha - 1];
+
+        if (GameData.muha == 1)
+        {
+            StartCoroutine(PlayMarySequence());
+        }
+        else if (GameData.muha == 2)
+        {
+            StartCoroutine(PlayDzunSequence());
+        }
+        else
+        {
+            StartCoroutine(PlayLinSequence());
+        }
     }
+        
 
     IEnumerator PlayMarySequence()
     {
+        textTop.GetComponent<TMP_Text>().text = "\n\n\nВнимание Франклина привлекла <b>красивая муха</b>";
 
-        //textTop.GetComponent<TMP_Text>().text = "\n\n\nВнимание Франклина привлекла <b>красивая муха</b>";
+        GameUtils.Instance.FadeIn(textTop, 1f);
 
-        //GameUtils.Instance.FadeIn(textTop, 1f);
+        yield return new WaitForSeconds(2.5f);
 
-        //yield return new WaitForSeconds(2.5f);
+        GameUtils.Instance.FadeOut(textTop, 1f);
 
-        //GameUtils.Instance.FadeOut(textTop, 1f);
+        GameUtils.Instance.FadeOut(blackScreen, 1f);
 
-        //yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.2f);
 
-        //textTop.GetComponent<TMP_Text>().text = "Маленькая. Тёмно-серая. С розовым бантиком на голове, который выглядел так, будто его повязала сама судьба - идеально, непоколебимо, с вызовом.";
+        textTop.GetComponent<TMP_Text>().text = "Маленькая. Тёмно-серая. С розовым бантиком на голове, который выглядел так, будто его повязала сама судьба - идеально, непоколебимо, с вызовом.";
 
-        //GameUtils.Instance.FadeIn(textTop, 1f);
+        GameUtils.Instance.FadeIn(textTop, 1f);
 
-        //yield return new WaitForSeconds(3.5f);
+        yield return new WaitForSeconds(3.5f);
 
-        //textBottom.GetComponent<TMP_Text>().text = "Глаза у неё были розовые и большие и взгляд такой будто точно сейчас точно-точно что-то что-то что-то конкретное попросит. Трудно было пройти мимо нее и не задержать на ней свой взгляд.";
+        textBottom.GetComponent<TMP_Text>().text = "\n\n\nГлаза у неё были розовые и большие и взгляд такой будто точно сейчас точно-точно что-то что-то что-то конкретное попросит. Трудно было пройти мимо нее и не задержать на ней свой взгляд.";
 
-        //GameUtils.Instance.FadeIn(textBottom, 1f);
+        GameUtils.Instance.FadeIn(textBottom, 1f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //GameUtils.Instance.FadeOut(textTop, 1f);
-        //GameUtils.Instance.FadeOut(textBottom, 1f);
+        GameUtils.Instance.FadeOut(textTop, 1f);
+        GameUtils.Instance.FadeOut(textBottom, 1f);
 
-        //yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.2f);
 
-        //textBottom.GetComponent<TMP_Text>().text = "Франклин замер и засмотрелся немного. Но после нескольких минут раздумий он решился подойти к ней и заговорить первым, но видимо у нее были свои планы.";
+        textBottom.GetComponent<TMP_Text>().text = "\n\n\nФранклин замер и засмотрелся немного. Но после нескольких минут раздумий он решился подойти к ней и заговорить первым, но видимо у нее были свои планы.";
 
-        //GameUtils.Instance.FadeIn(textBottom, 1f);
+        GameUtils.Instance.FadeIn(textBottom, 1f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().color = new Color(255, 255, 255);
+        textDialogue.GetComponent<TMP_Text>().color = new Color(255, 255, 255);
 
-        //GameUtils.Instance.FadeOut(textBottom, 0.5f);
+        GameUtils.Instance.FadeOut(textBottom, 0.5f);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "\n<color=#f793b8>Мари: </color>";
+        textDialogue.GetComponent<TMP_Text>().text = "\n<color=#f793b8>Мари: </color>";
 
-        //GameUtils.Instance.FadeIn(textDialogue, 0.1f);
+        GameUtils.Instance.FadeIn(textDialogue, 0.1f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("О - ой...ещё один день в этой дыре. ");
+        textDialogue.GetComponent<TextTyper>().StartTyping("О - ой...ещё один день в этой дыре. ");
 
-        //yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(2f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Как всегда одна. Как всегда, никому не нужна...");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Как всегда одна. Как всегда, никому не нужна...");
 
-        //yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping(" Никому я не нужна...");
+        textDialogue.GetComponent<TextTyper>().StartTyping(" Никому я не нужна...");
 
-        //yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(1.5f);
 
-        //GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+        GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
+        textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
 
-        //GameUtils.Instance.FadeIn(textDialogue, 0.5f);
+        GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Она... плачет? Нет, не плачет. Просто смотрит так... как будто ей очень грустно.");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Она... плачет? Нет, не плачет. Просто смотрит так... как будто ей очень грустно.");
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
+        textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Хотя, может, ей всегда грустно. У мух иногда бывает такое выражение лица.");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Хотя, может, ей всегда грустно. У мух иногда бывает такое выражение лица.");
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
+        textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Или нет?");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Или нет?");
 
-        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping(" Я вообще не разбираюсь в мухах. Я их только кушаю.");
+        textDialogue.GetComponent<TextTyper>().StartTyping(" Я вообще не разбираюсь в мухах. Я их только кушаю.");
 
-        //yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(3f);
 
-        //GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+        GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textBottom.GetComponent<TMP_Text>().text = "Паучок подошел к ее столику и захотел утешить. И спросить, возможно она знает как можно вернуться на чердак.";
+        textBottom.GetComponent<TMP_Text>().text = "Паучок подошел к ее столику и захотел утешить. И спросить, возможно она знает как можно вернуться на чердак.";
 
-        //GameUtils.Instance.FadeIn(textBottom, 1f);
+        GameUtils.Instance.FadeIn(textBottom, 1f);
 
-        //yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1f);
 
-        ////////////////////////////////////////////////////////////////////////////
+        //////////////////////////////////////////////////////////////////////////
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //GameUtils.Instance.FadeOut(textBottom, 1f);
+        GameUtils.Instance.FadeOut(textBottom, 1f);
 
-        //yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.75f);
 
-        //textDialogue.GetComponent<TMP_Text>().color = new Color(0, 0, 0, 0);
+        textDialogue.GetComponent<TMP_Text>().color = new Color(0, 0, 0, 0);
 
-        //GameUtils.Instance.FadeIn(dialogueBar, 1f);
+        GameUtils.Instance.FadeIn(dialogueBar, 1f);
 
-        //yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.75f);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
-        //GameUtils.Instance.FadeIn(textDialogue, 0.5f);
+        GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.75f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Эй. Эй... Я... можно я присяду? Если ты не против.");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Эй. Эй... Я... можно я присяду? Если ты не против.");
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Паук?        Ты... паук?        \nНаверное, тебе совсем не страшно жить на этом свете. Не то что мне, я такая маленькая и все хотят меня обидеть..");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Паук?        Ты... паук?        \nНаверное, тебе совсем не страшно жить на этом свете. Не то что мне, я такая маленькая и все хотят меня обидеть..");
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+        GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.75f);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "\n\nОна посмотрела на его перевязанную лапку. И что-то в её взгляде изменилось - стал мягче, теплее.";
+        textDialogue.GetComponent<TMP_Text>().text = "\n\nОна посмотрела на его перевязанную лапку. И что-то в её взгляде изменилось - стал мягче, теплее.";
 
-        //GameUtils.Instance.FadeIn(textDialogue, 0.5f);
+        GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.5f);
 
-        //GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+        GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.75f);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //GameUtils.Instance.FadeIn(textDialogue, 0.5f);
+        GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Ой... лапка... У тебя лапка перевязана.  ");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Ой... лапка... У тебя лапка перевязана.  ");
 
-        //yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(2.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Это же... больно? Тебе больно?");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Это же... больно? Тебе больно?");
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Ой, мне так жаль, я просто... я не могу видеть, когда кому-то плохо. Я такая чувствительная. Мне буквально больно смотреть на твою лапку");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Ой, мне так жаль, я просто... я не могу видеть, когда кому-то плохо. Я такая чувствительная. Мне буквально больно смотреть на твою лапку");
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Нет, нет, не беспокойся, все хорошо, это давно было...");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Нет, нет, не беспокойся, все хорошо, это давно было...");
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Слушай, а ты случайно не знаешь, как выбраться отсюда?    \nМне нужно вернуться, не могла бы ты мне помочь?");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Слушай, а ты случайно не знаешь, как выбраться отсюда?    \nМне нужно вернуться, не могла бы ты мне помочь?");
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Да, конечно, знаю.        \nЯ знаю много путей и как выйти там откуда пришел и откуда ушел, но за пределами нашего городка неспокойно. Идти в одиночку опасно!");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Да, конечно, знаю.        \nЯ знаю много путей и как выйти там откуда пришел и откуда ушел, но за пределами нашего городка неспокойно. Идти в одиночку опасно!");
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Может... ");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Может... ");
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Может, ты не будешь прятаться один?        \nВдруг тебе станет ещё хуже, и никого рядом не будет..?");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Может, ты не будешь прятаться один?        \nВдруг тебе станет ещё хуже, и никого рядом не будет..?");
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("Я понимаю, если не хочешь. Я привыкла быть одна... ");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Я понимаю, если не хочешь. Я привыкла быть одна... ");
 
-        //yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(4f);
 
-        //textDialogue.GetComponent<TextTyper>().StartTyping("     \nСовсем одна...");
+        textDialogue.GetComponent<TextTyper>().StartTyping("     \nСовсем одна...");
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        //GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+        GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
-        //yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.5f);
 
-        //textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\nТы же возьмёшь меня с собой?";
+        textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\nТы же возьмёшь меня с собой?";
 
-        //GameUtils.Instance.FadeIn(textDialogue, 0.5f);
+        GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
-        //buttonGood.SetActive(true);
-        //buttonBad.SetActive(true);
+        buttonBad.GetComponent<UnityEngine.UI.Button>().interactable = true;
+        buttonGood.GetComponent<UnityEngine.UI.Button>().interactable = true;
 
-        //GameUtils.Instance.FadeIn(buttonBad, 0.5f);
-        //GameUtils.Instance.FadeIn(buttonGood, 0.5f);
+        buttonGood.SetActive(true);
+        buttonBad.SetActive(true);
 
-        //yield return new WaitForSeconds(0.5f);
+        GameUtils.Instance.FadeIn(buttonBad, 0.5f);
+        GameUtils.Instance.FadeIn(buttonGood, 0.5f);
 
-        //yield return new WaitUntil(() => Gamedata.lastChoice != 0);
+        yield return new WaitForSeconds(0.5f);
 
-        //buttonBad.GetComponent<Button>().interactable = false;
-        //buttonGood.GetComponent<Button>().interactable = false;
+        yield return new WaitUntil(() => GameData.lastChoice != 0);
 
-        //GameUtils.Instance.FadeOut(buttonBad, 0.5f);
-        //GameUtils.Instance.FadeOut(buttonGood, 0.5f);
+        buttonBad.GetComponent<UnityEngine.UI.Button>().interactable = false;
+        buttonGood.GetComponent<UnityEngine.UI.Button>().interactable = false;
 
-        //buttonGood.SetActive(false);
-        //buttonBad.SetActive(false);
+        GameUtils.Instance.FadeOut(buttonBad, 0.5f);
+        GameUtils.Instance.FadeOut(buttonGood, 0.5f);
 
-        //yield return new WaitForSeconds(1f);
+        buttonGood.SetActive(false);
+        buttonBad.SetActive(false);
 
-        //if (GameData.karma == 1)
-        //{
-        //    StartCoroutine(BeGood());
-        //}
-        //else
-        //{
-        //    StartCoroutine(BeBad());
-        //}
+        yield return new WaitForSeconds(1f);
 
-        //Gamedata.lastChoice = 0;
+        if (GameData.karma == 1)
+        {
+            StartCoroutine(BeGood());
+        }
+        else
+        {
+            StartCoroutine(BeBad());
+        }
+
+        GameData.lastChoice = 0;
 
         ////////////////////////////////////////////////// ВСЁ НИЖЕ УБРАТЬ
 
@@ -347,8 +377,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         //yield return new WaitUntil(() => Abs(GameData.karma) == 1);
 
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(Koridor());
+        //yield return new WaitForSeconds(0.5f);
+        //StartCoroutine(Koridor());
     }
 
     IEnumerator BeGood()
@@ -608,8 +638,8 @@ public class ChoseMuhaScript : MonoBehaviour
         buttonGood.GetComponentInChildren<TMP_Text>().text = "Ты права... Буду тише";
         buttonBad.GetComponentInChildren<TMP_Text>().text = "Ты сама напросилась в попутчики!";
 
-        buttonBad.GetComponent<Button>().interactable = true;
-        buttonGood.GetComponent<Button>().interactable = true;
+        buttonBad.GetComponent<UnityEngine.UI.Button>().interactable = true;
+        buttonGood.GetComponent<UnityEngine.UI.Button>().interactable = true;
 
         GameUtils.Instance.FadeIn(buttonBad, 0.5f);
         GameUtils.Instance.FadeIn(buttonGood, 0.5f);
@@ -785,5 +815,22 @@ public class ChoseMuhaScript : MonoBehaviour
 
         //Запуск сцены с игрой про тапок
     }
+    IEnumerator PlayDzunSequence()
+    {
+        textMiddle.GetComponent<TMP_Text>().text = "\n\n\n<b>Мы ни**я не успели сделать</b>";
+
+        GameUtils.Instance.FadeIn(textMiddle, 1f);
+        yield return new WaitForSeconds(1f);
+    }
+
+
+    IEnumerator PlayLinSequence()
+    {
+        textMiddle.GetComponent<TMP_Text>().text = "\n\n\n<b>Мы ни**я не успели сделать</b>";
+
+        GameUtils.Instance.FadeIn(textMiddle, 1f);
+        yield return new WaitForSeconds(1f);
+    }
+
 
 }

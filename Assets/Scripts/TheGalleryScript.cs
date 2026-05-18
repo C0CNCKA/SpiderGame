@@ -19,15 +19,18 @@ public class TheGalleryScript : MonoBehaviour
     [SerializeField] private GameObject textMiddle;
     [SerializeField] private GameObject spiderBarBlurred;
     [SerializeField] private GameObject spiderBar;
+    [SerializeField] private GameObject muhiBar;
     [SerializeField] private GameObject hint;
-    [SerializeField] private GameObject buttonBad;
-    [SerializeField] private GameObject buttonGood;
+    [SerializeField] private GameObject buttonMary;
+    [SerializeField] private GameObject buttonDzun;
+    [SerializeField] private GameObject buttonLin;
     [SerializeField] private GameObject spiderFell;
     [SerializeField] private GameObject hole;
 
 
     void Start()
     {
+
         StartCoroutine(PlaySequence());
     }
 
@@ -84,6 +87,13 @@ public class TheGalleryScript : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
+        textTop.GetComponent<Animator>().enabled = false;
+        textBottom.GetComponent<Animator>().enabled = false;
+        textMiddle.GetComponent<Animator>().enabled = false;
+        hint.GetComponent<Animator>().enabled = false;
+        //hint.GetComponent<Animator>().enabled = false;
+        blackScreen.GetComponent<Animator>().enabled = false;
+
         GameUtils.Instance.FadeIn(blackScreen, 0.75f);
         GameUtils.Instance.FadeOut(textBottom, 0.75f);
 
@@ -94,9 +104,13 @@ public class TheGalleryScript : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         textTop.GetComponent<TMP_Text>().text = "Где-то в глубине квартиры ожил человек.\nТот самый, который иногда ходил по \nпотолку<i>(с точки зрения Франклина)</i> и \nпериодически вооружался чем-то\nплоским и очень, очень быстрым\n";
+
+
+
         GameUtils.Instance.FadeIn(textTop, 1.5f);
 
         yield return new WaitForSeconds(6f);
+
         textMiddle.GetComponent<TMP_Text>().fontSize = 200;
         textMiddle.GetComponent<TMP_Text>().text = "\n<color=#ff0000ff>Тапком</color>";
 
@@ -299,6 +313,8 @@ public class TheGalleryScript : MonoBehaviour
 
         GameUtils.Instance.FadeTo(blackScreen, 1f, 0.35f);
 
+        yield return new WaitForSeconds(1f);
+
         //yield return new WaitForSeconds(1f);
 
         RectTransform rt = textBottom.GetComponent<RectTransform>();
@@ -332,7 +348,7 @@ public class TheGalleryScript : MonoBehaviour
         GameUtils.Instance.FadeTo(blackScreen, 1f, 0.35f);
         GameUtils.Instance.FadeOut(spiderBarBlurred, 1f);
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         spiderBarBlurred.SetActive(false);
 
@@ -349,25 +365,67 @@ public class TheGalleryScript : MonoBehaviour
 
         GameUtils.Instance.FadeIn(textMiddle, 2f);
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
-        GameUtils.Instance.FadeIn(blackScreen, 4f);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.FadeOut(textTop, 2f);
+        GameUtils.Instance.FadeOut(textMiddle, 2f);
+
+        GameUtils.Instance.FadeIn(muhiBar, 2f);
 
         GameUtils.Instance.FadeIn(textBottom, 2f);
 
         yield return new WaitForSeconds(4f);
 
-        hint.GetComponent<TMP_Text>().text = "(Space - продолжить)";
+        //hint.GetComponent<TMP_Text>().text = "(Space - продолжить)";
 
-        GameUtils.Instance.FadeTo(hint, 1f, 0.25f);
+        //GameUtils.Instance.FadeTo(hint, 1f, 0.25f);
 
-        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        GameUtils.Instance.FadeOut(hint, 0.5f);
+        //GameUtils.Instance.FadeOut(hint, 0.5f);
         GameUtils.Instance.FadeOut(textTop, 1f);
         GameUtils.Instance.FadeOut(textMiddle, 1f);
         GameUtils.Instance.FadeOut(textBottom, 1f);
+        GameUtils.Instance.FadeOut(blackScreen, 1f);
+
+        buttonDzun.SetActive(true);
+        buttonMary.SetActive(true);
+        buttonLin.SetActive(true);
+
+        GameUtils.Instance.FadeIn(buttonDzun, 0.8f);
+        GameUtils.Instance.FadeIn(buttonMary, 0.8f);
+        GameUtils.Instance.FadeIn(buttonLin, 0.8f);
+
+        yield return new WaitUntil(() => GameData.muha != -1);
+        //buttonDzun.SetActive(false);
+        //buttonMary.SetActive(false);
+        //buttonLin.SetActive(false);
+
+        GameUtils.Instance.FadeOut(buttonDzun, 0.8f);
+        GameUtils.Instance.FadeOut(buttonMary, 0.8f);
+        GameUtils.Instance.FadeOut(buttonLin, 0.8f);
+
+        GameUtils.Instance.FadeIn(blackScreen, 1f);
+
+        yield return new WaitForSeconds(1.2f);
 
         SceneManager.LoadScene("Muha");
     }
+
+    public void ChooseMary()
+    {
+        GameData.muha = 1;
+    }
+    public void ChooseDzun()
+    {
+        GameData.muha = 2;
+    }
+    public void ChooseLin()
+    {
+        GameData.muha = 3;
+    }
+
+
 }

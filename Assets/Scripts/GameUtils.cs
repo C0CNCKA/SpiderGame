@@ -22,7 +22,6 @@ public class GameUtils : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
-
     public void beGood()
     {
         GameData.karma += 1;
@@ -55,19 +54,24 @@ public class GameUtils : MonoBehaviour
 
         float elapsedTime = 0f;
 
-        if (target.TryGetComponent<TMP_Text>(out TMP_Text text))
+        if (target.TryGetComponent<Animator>(out Animator target_animator)) {
+            target_animator.enabled = false;
+        }
+
+        if (target.TryGetComponent<CanvasGroup>(out CanvasGroup canvas))
         {
-            float startAlpha = text.color.a;
-            Color startColor = text.color;
+            float startAlpha = canvas.alpha;
             while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / duration);
-                text.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
+                canvas.alpha = alpha;
                 yield return null;
             }
-            text.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+            canvas.alpha = targetAlpha;
         }
+
+        
 
         else if (target.TryGetComponent<RawImage>(out RawImage img))
         {
@@ -83,17 +87,18 @@ public class GameUtils : MonoBehaviour
             img.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
         }
 
-        else if (target.TryGetComponent<CanvasGroup>(out CanvasGroup canvas))
+        else if (target.TryGetComponent<TMP_Text>(out TMP_Text text))
         {
-            float startAlpha = canvas.alpha;
+            float startAlpha = text.color.a;
+            Color startColor = text.color;
             while (elapsedTime < duration)
             {
                 elapsedTime += Time.deltaTime;
                 float alpha = Mathf.Lerp(startAlpha, targetAlpha, elapsedTime / duration);
-                canvas.alpha = alpha;
+                text.color = new Color(startColor.r, startColor.g, startColor.b, alpha);
                 yield return null;
             }
-            canvas.alpha = targetAlpha;
+            text.color = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
         }
     }
 }
