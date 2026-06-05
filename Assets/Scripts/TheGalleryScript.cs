@@ -320,7 +320,6 @@ public class TheGalleryScript : MonoBehaviour
         RectTransform rt = textBottom.GetComponent<RectTransform>();
         rt.anchoredPosition = new Vector2(-58, -848);
         textBottom.GetComponent<TMP_Text>().fontSize = 100;
-
         rt = textTop.GetComponent<RectTransform>();
         rt.anchoredPosition = new Vector2(-76, 0);
 
@@ -329,7 +328,7 @@ public class TheGalleryScript : MonoBehaviour
         //GameUtils.Instance.FadeIn(textTop, 0.5f);
         //yield return new WaitForSeconds(0.5f);
 
-        textBottom.GetComponent<TMP_Text>().fontSize = 100;
+        textBottom.GetComponent<TMP_Text>().fontSize = 80;
 
         //yield return new WaitForSeconds(4);
 
@@ -345,7 +344,7 @@ public class TheGalleryScript : MonoBehaviour
 
         spiderBar.SetActive(true);
 
-        GameUtils.Instance.FadeTo(blackScreen, 1f, 0.35f);
+        GameUtils.Instance.FadeTo(blackScreen, 1f, 0.5f);
         GameUtils.Instance.FadeOut(spiderBarBlurred, 1f);
 
         yield return new WaitForSeconds(1f);
@@ -357,7 +356,8 @@ public class TheGalleryScript : MonoBehaviour
 
         textTop.GetComponent<TMP_Text>().text = "Немного порассуждав, Франклин вошёл внутрь. \nЕго встретила довольно приятная атмосфера. \nИнтерьер помещения был... необычный";
         textMiddle.GetComponent<TMP_Text>().text = "Все было не под него, но оно и понятно.\nПауки всегда жили на чердаке, редко их можно было встретить тут.. \"внизу\".";
-        textBottom.GetComponent<TMP_Text>().text = "Он прошел чуть дальше и увидел, что за разными столиками сидят <b>три разные мухи</b>.";
+        //textBottom.GetComponent<TMP_Text>().text = "Он прошел чуть дальше и увидел, что за разными столиками сидят <b>три разные мухи</b>.";
+        textBottom.GetComponent<TMP_Text>().text = "Он прошел чуть дальше, за столиками сидели разные мухи. Но Внимание Франклина сразу привлекла лишь одна из них.";
 
         GameUtils.Instance.FadeIn(textTop, 2f);
 
@@ -390,26 +390,28 @@ public class TheGalleryScript : MonoBehaviour
         GameUtils.Instance.FadeOut(textBottom, 1f);
         GameUtils.Instance.FadeOut(blackScreen, 1f);
 
-        buttonDzun.SetActive(true);
-        buttonMary.SetActive(true);
-        buttonLin.SetActive(true);
+        //buttonDzun.SetActive(true);
+        //buttonMary.SetActive(true);
+        //buttonLin.SetActive(true);
 
-        GameUtils.Instance.FadeIn(buttonDzun, 0.8f);
-        GameUtils.Instance.FadeIn(buttonMary, 0.8f);
-        GameUtils.Instance.FadeIn(buttonLin, 0.8f);
+        //GameUtils.Instance.FadeIn(buttonDzun, 0.8f);
+        //GameUtils.Instance.FadeIn(buttonMary, 0.8f);
+        //GameUtils.Instance.FadeIn(buttonLin, 0.8f);
+        GameData.muha = 1;
 
-        yield return new WaitUntil(() => GameData.muha != -1);
-        //buttonDzun.SetActive(false);
-        //buttonMary.SetActive(false);
-        //buttonLin.SetActive(false);
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        //yield return new WaitUntil(() => GameData.muha != 0);
+        ////buttonDzun.SetActive(false);
+        ////buttonMary.SetActive(false);
+        ////buttonLin.SetActive(false);
 
-        GameUtils.Instance.FadeOut(buttonDzun, 0.8f);
-        GameUtils.Instance.FadeOut(buttonMary, 0.8f);
-        GameUtils.Instance.FadeOut(buttonLin, 0.8f);
+        //GameUtils.Instance.FadeOut(buttonDzun, 0.8f);
+        //GameUtils.Instance.FadeOut(buttonMary, 0.8f);
+        //GameUtils.Instance.FadeOut(buttonLin, 0.8f);
 
         GameUtils.Instance.FadeIn(blackScreen, 1f);
 
-        yield return new WaitForSeconds(1.2f);
+        yield return new WaitForSeconds(1.1f);
 
         SceneManager.LoadScene("Muha");
     }

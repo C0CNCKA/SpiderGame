@@ -26,12 +26,15 @@ public class GameUtils : MonoBehaviour
     {
         GameData.karma += 1;
         GameData.lastChoice = 1;
+        Debug.Log(GameData.karma);
     }
 
     public void beBad()
     {
         GameData.karma -= 1;
         GameData.lastChoice = -1;
+        Debug.Log(GameData.karma);
+
     }
 
     public void FadeIn(GameObject target, float duration)
@@ -45,6 +48,15 @@ public class GameUtils : MonoBehaviour
     public void FadeTo(GameObject target, float duration, float alpha)
     {
         StartCoroutine(FadeRoutine(target, duration, alpha));
+    }
+
+    public void SwapCharacterImages(GameObject left, GameObject right)
+    {
+        Texture leftImage = left.GetComponent<RawImage>().texture;
+
+        left.GetComponent<RawImage>().texture = right.GetComponent<RawImage>().texture;
+        right.GetComponent<RawImage>().texture = leftImage;
+
     }
 
 

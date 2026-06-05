@@ -1,12 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
 //using System.Numerics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using static UnityEngine.Mathf;
 
 public class ChoseMuhaScript : MonoBehaviour
 {
@@ -21,11 +19,15 @@ public class ChoseMuhaScript : MonoBehaviour
     [SerializeField] private GameObject buttonGood;
     [SerializeField] private GameObject buttonBad;
     [SerializeField] private GameObject muhaImage;
-    [SerializeField] private Texture2D[] FranklinTextures;
-    [SerializeField] private Texture2D[] MaryTextures;
-    [SerializeField] private Texture2D[] AnotherMuhaTextures;
-    [SerializeField] private Texture2D[] IecheHuhaTextures;
-    [SerializeField] private Texture2D[] MuhaClose;
+    [SerializeField] private GameObject backgroundImage;
+    [SerializeField] private GameObject franklinImage;
+    [SerializeField] private Texture2D[] franklinTextures;
+    [SerializeField] private Texture2D[] maryTextures;
+    [SerializeField] private Texture2D[] anotherMuhaTextures;
+    [SerializeField] private Texture2D[] iecheHuhaTextures;
+    [SerializeField] private Texture2D[] muhaClose;
+
+    [SerializeField] private Texture2D[] backgrounds;
 
     void Start()
     {
@@ -39,7 +41,9 @@ public class ChoseMuhaScript : MonoBehaviour
             GameUtils.Instance.beBad();
         });
 
-        muhaImage.GetComponent<RawImage>().texture = MuhaClose[GameData.muha - 1];
+        muhaImage.GetComponent<RawImage>().texture = muhaClose[GameData.muha - 1];
+
+        if (GameData.muha == 0) GameData.muha = 1;
 
         if (GameData.muha == 1)
         {
@@ -58,13 +62,13 @@ public class ChoseMuhaScript : MonoBehaviour
 
     IEnumerator PlayMarySequence()
     {
-        textTop.GetComponent<TMP_Text>().text = "\n\n\nВнимание Франклина привлекла <b>красивая муха</b>";
+        //textTop.GetComponent<TMP_Text>().text = "\n\n\nКрасивая, достаточно стройная(по мушьим меркам), с розовыми глазами и аккуратным бантиком.";
 
-        GameUtils.Instance.FadeIn(textTop, 1f);
+        //GameUtils.Instance.FadeIn(textTop, 1f);
 
-        yield return new WaitForSeconds(2.5f);
+        //yield return new WaitForSeconds(2.5f);
 
-        GameUtils.Instance.FadeOut(textTop, 1f);
+        //GameUtils.Instance.FadeOut(textTop, 1f);
 
         GameUtils.Instance.FadeOut(blackScreen, 1f);
 
@@ -97,6 +101,10 @@ public class ChoseMuhaScript : MonoBehaviour
 
         GameUtils.Instance.FadeOut(textBottom, 0.5f);
 
+        textBottom.GetComponent<TMP_Text>().text = "";
+
+        yield return new WaitForSeconds(0.5f);
+
         textDialogue.GetComponent<TMP_Text>().text = "\n<color=#f793b8>Мари: </color>";
 
         GameUtils.Instance.FadeIn(textDialogue, 0.1f);
@@ -117,21 +125,25 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.FadeIn(franklinImage, 0.5f);
+
+        yield return new WaitForSeconds(0.65f);
+
         textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
 
         GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
         yield return new WaitForSeconds(0.5f);
 
-        textDialogue.GetComponent<TextTyper>().StartTyping("Она... плачет? Нет, не плачет. Просто смотрит так... как будто ей очень грустно.");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Она... плачет?       \nНет, не плачет. Просто смотрит так... как будто ей очень грустно.");
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        textDialogue.GetComponent<TMP_Text>().text = "\n<color=#ffb790>Франклин: </color>";
+        textDialogue.GetComponent<TMP_Text>().text = "\n\n<color=#ffb790>Франклин: </color>";
 
         yield return new WaitForSeconds(0.5f);
 
-        textDialogue.GetComponent<TextTyper>().StartTyping("Хотя, может, ей всегда грустно. У мух иногда бывает такое выражение лица.");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Хотя, может, ей всегда грустно.     \nУ мух иногда бывает такое выражение лица.");
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
@@ -147,11 +159,14 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(3f);
 
+        GameUtils.Instance.FadeIn(backgroundImage, 0.5f);
+
         GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
-        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        //yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+        yield return new WaitForSeconds(0.75f);
 
-        textBottom.GetComponent<TMP_Text>().text = "Паучок подошел к ее столику и захотел утешить. И спросить, возможно она знает как можно вернуться на чердак.";
+        textBottom.GetComponent<TMP_Text>().text = "\n\n\n\n\n\nПаучок подошел к ее столику и захотел утешить. И спросить, возможно она знает как можно вернуться на чердак.";
 
         GameUtils.Instance.FadeIn(textBottom, 1f);
 
@@ -165,11 +180,15 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.75f);
 
-        textDialogue.GetComponent<TMP_Text>().color = new Color(0, 0, 0, 0);
+        textDialogue.GetComponent<TMP_Text>().color = new Color(255, 255, 255, 0);
 
-        GameUtils.Instance.FadeIn(dialogueBar, 1f);
+        characterLeft.GetComponent<RawImage>().texture = franklinTextures[0];
+
+        GameUtils.Instance.FadeTo(dialogueBar, 1f, 0.8f);
 
         yield return new WaitForSeconds(0.75f);
+
+        GameUtils.Instance.FadeIn(characterLeft, 1f);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
@@ -180,6 +199,10 @@ public class ChoseMuhaScript : MonoBehaviour
         textDialogue.GetComponent<TextTyper>().StartTyping("Эй. Эй... Я... можно я присяду? Если ты не против.");
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -193,6 +216,9 @@ public class ChoseMuhaScript : MonoBehaviour
 
         GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
+        GameUtils.Instance.FadeOut(characterLeft, 0.4f);
+        GameUtils.Instance.FadeOut(characterRight, 0.4f);
+
         yield return new WaitForSeconds(0.75f);
 
         textDialogue.GetComponent<TMP_Text>().text = "\n\nОна посмотрела на его перевязанную лапку. И что-то в её взгляде изменилось - стал мягче, теплее.";
@@ -204,6 +230,9 @@ public class ChoseMuhaScript : MonoBehaviour
         GameUtils.Instance.FadeOut(textDialogue, 0.5f);
 
         yield return new WaitForSeconds(0.75f);
+
+        GameUtils.Instance.FadeIn(characterLeft, 0.5f);
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -227,6 +256,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -244,6 +275,8 @@ public class ChoseMuhaScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -281,7 +314,7 @@ public class ChoseMuhaScript : MonoBehaviour
 
         textDialogue.GetComponent<TextTyper>().StartTyping("Я понимаю, если не хочешь. Я привыкла быть одна... ");
 
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
 
         textDialogue.GetComponent<TextTyper>().StartTyping("     \nСовсем одна...");
 
@@ -290,6 +323,9 @@ public class ChoseMuhaScript : MonoBehaviour
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
         GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+
+        GameUtils.Instance.FadeOut(characterLeft, 0.4f);
+        //GameUtils.Instance.FadeOut(characterRight, 0.4f);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -321,13 +357,16 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        if (GameData.karma == 1)
+        Debug.Log(GameData.karma);
+        Debug.Log(GameData.lastChoice);
+
+        if (GameData.lastChoice == 1)
         {
-            StartCoroutine(BeGood());
+            StartCoroutine(BeGoodMary());
         }
         else
         {
-            StartCoroutine(BeBad());
+            StartCoroutine(BeBadMary());
         }
 
         GameData.lastChoice = 0;
@@ -381,8 +420,12 @@ public class ChoseMuhaScript : MonoBehaviour
         //StartCoroutine(Koridor());
     }
 
-    IEnumerator BeGood()
+    IEnumerator BeGoodMary()
     {
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+        GameUtils.Instance.FadeIn(characterLeft, 0.5f);
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -403,6 +446,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -412,6 +457,8 @@ public class ChoseMuhaScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
@@ -447,6 +494,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.75f);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
         GameUtils.Instance.FadeIn(textDialogue, 0.5f);
@@ -461,6 +510,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -470,6 +521,8 @@ public class ChoseMuhaScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -485,13 +538,25 @@ public class ChoseMuhaScript : MonoBehaviour
 
         textDialogue.GetComponent<TextTyper>().StartTyping("Это ничего...");
 
+        GameUtils.Instance.FadeOut(characterLeft, 0.5f);
+        GameUtils.Instance.FadeOut(characterRight, 0.5f);
+
+
+        GameUtils.Instance.FadeIn(blackScreen, 0.75f);
+
+        yield return new WaitForSeconds(0.75f);
+
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        StartCoroutine(Koridor());
+        StartCoroutine(KoridorMary());
     }
 
-    IEnumerator BeBad()
+    IEnumerator BeBadMary()
     {
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+        GameUtils.Instance.FadeIn(characterLeft, 0.5f);
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -511,6 +576,8 @@ public class ChoseMuhaScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -532,6 +599,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -546,7 +615,7 @@ public class ChoseMuhaScript : MonoBehaviour
 
         GameUtils.Instance.FadeIn(textDialogue, 0.5f);
 
-        textDialogue.GetComponent<TextTyper>().StartTyping("Может, знаю, а может нет...");
+        textDialogue.GetComponent<TextTyper>().StartTyping("Может, знаю, а может нет... ");
 
         yield return new WaitForSeconds(2f);
 
@@ -554,14 +623,26 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
 
+        GameUtils.Instance.FadeOut(characterLeft, 0.5f);
+        GameUtils.Instance.FadeOut(characterRight, 0.5f);
+
+        GameUtils.Instance.FadeIn(blackScreen, 0.75f);
+        yield return new WaitForSeconds(0.75f);
+
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
-        StartCoroutine(Koridor());
+        GameUtils.Instance.FadeOut(textDialogue, 0.5f);
+
+        yield return new WaitForSeconds(0.5f);
+
+        StartCoroutine(KoridorMary());
     }
 
-    IEnumerator Koridor()
+    IEnumerator KoridorMary()
     {
         RectTransform rt;
+
+        backgroundImage.GetComponent<RawImage>().texture = backgrounds[0];
 
         GameUtils.Instance.FadeOut(textDialogue, 0.5f);
         GameUtils.Instance.FadeOut(dialogueBar, 0.5f);
@@ -589,6 +670,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
+        GameUtils.Instance.FadeOut(blackScreen, 1.2f);
+
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
         GameUtils.Instance.FadeOut(textTop, 0.5f);
@@ -602,9 +685,13 @@ public class ChoseMuhaScript : MonoBehaviour
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n<i>[гордо двигается со знанием своего пешего дела]</i>";
 
         GameUtils.Instance.FadeIn(textDialogue, 0.5f);
-        GameUtils.Instance.FadeIn(dialogueBar, 0.5f);
+        GameUtils.Instance.FadeTo(dialogueBar, 0.5f, 0.8f);
+        GameUtils.Instance.FadeIn(characterLeft, 0.5f);
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
 
         yield return new WaitForSeconds(3f);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -614,6 +701,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -622,7 +711,13 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
+
+
+        GameUtils.Instance.FadeOut(characterLeft, 0.5f);
+        //GameUtils.Instance.FadeOut(characterRight, 0.5f);
 
         yield return new WaitForSeconds(0.5f);
 
@@ -648,8 +743,6 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => GameData.lastChoice != 0);
 
-        
-
         GameUtils.Instance.FadeOut(buttonBad, 0.5f);
         GameUtils.Instance.FadeOut(buttonGood, 0.5f);
 
@@ -669,6 +762,11 @@ public class ChoseMuhaScript : MonoBehaviour
 
     IEnumerator AgreeMary()
     {
+        GameUtils.Instance.FadeIn(characterLeft, 0.5f);
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
+
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -678,6 +776,8 @@ public class ChoseMuhaScript : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
 
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
@@ -693,6 +793,12 @@ public class ChoseMuhaScript : MonoBehaviour
     }
     IEnumerator DisagreeMary()
     {
+
+        GameUtils.Instance.FadeIn(characterLeft, 0.5f);
+        GameUtils.Instance.FadeIn(characterRight, 0.5f);
+
+        yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#ffb790>        Франклин:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -703,6 +809,8 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitUntil(() => Keyboard.current.spaceKey.wasPressedThisFrame);
 
+        GameUtils.Instance.SwapCharacterImages(characterLeft, characterRight);
+
         textDialogue.GetComponent<TMP_Text>().text = "<color=#f793b8>        Мари:</color>\n";
 
         yield return new WaitForSeconds(0.5f);
@@ -711,7 +819,7 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.3f);
 
-        textDialogue.GetComponent<TextTyper>().StartTyping("Никто меня не ценит. Умру от одиночества прям тут и тогда посмотрим, как ты без меня");
+        textDialogue.GetComponent<TextTyper>().StartTyping("\nНикто меня не ценит. Умру от одиночества прям тут и тогда посмотрим, как ты без меня");
 
         yield return new WaitForSeconds(0.5f);
 
@@ -722,8 +830,12 @@ public class ChoseMuhaScript : MonoBehaviour
 
     IEnumerator HumanScene()
     {
+        GameUtils.Instance.FadeOut(characterLeft, 0.5f);
+        GameUtils.Instance.FadeOut(characterRight, 0.5f);
         GameUtils.Instance.FadeOut(textDialogue, 0.5f);
         GameUtils.Instance.FadeOut(dialogueBar, 0.5f);
+
+        GameUtils.Instance.FadeTo(blackScreen, 0.75f, 0.5f);
 
         yield return new WaitForSeconds(0.75f);
 
@@ -759,7 +871,7 @@ public class ChoseMuhaScript : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        textMiddle.GetComponent<TMP_Text>().text = "Франклин и Мари посмотрели в сторону откуда доносится звук и увидели перед собой….";
+        textMiddle.GetComponent<TMP_Text>().text = "Франклин посмотрел в сторону откуда доносится звук и увидели перед собой….";
 
         GameUtils.Instance.FadeIn(textMiddle, 0.75f);
 
@@ -776,6 +888,8 @@ public class ChoseMuhaScript : MonoBehaviour
         GameUtils.Instance.FadeOut(textTop, 0.5f);
         GameUtils.Instance.FadeOut(textMiddle, 0.5f);
         GameUtils.Instance.FadeOut(textBottom, 0.5f);
+
+        GameUtils.Instance.FadeIn(blackScreen, 1.5f);
 
         yield return new WaitForSeconds(0.75f);
 
@@ -814,23 +928,37 @@ public class ChoseMuhaScript : MonoBehaviour
         textMiddle.GetComponent<TMP_Text>().fontSize = 80;
 
         //Запуск сцены с игрой про тапок
+        // Дальше холодос
+        SceneManager.LoadScene("Holodos"); //!! Это долджно быть только после игры
     }
     IEnumerator PlayDzunSequence()
     {
-        textMiddle.GetComponent<TMP_Text>().text = "\n\n\n<b>Мы ни**я не успели сделать</b>";
+        textTop.GetComponent<TMP_Text>().text = "\n\n\nВнимание Франклина привлекла <b>Таинственная муха</b>";
 
-        GameUtils.Instance.FadeIn(textMiddle, 1f);
-        yield return new WaitForSeconds(1f);
+        GameUtils.Instance.FadeIn(textTop, 1f);
+
+        yield return new WaitForSeconds(2.5f);
+
+        GameUtils.Instance.FadeOut(textTop, 1f);
+
+        GameUtils.Instance.FadeOut(blackScreen, 1f);
+
+        yield return new WaitForSeconds(1.2f);
     }
 
 
     IEnumerator PlayLinSequence()
     {
-        textMiddle.GetComponent<TMP_Text>().text = "\n\n\n<b>Мы ни**я не успели сделать</b>";
+        textTop.GetComponent<TMP_Text>().text = "\n\n\nВнимание Франклина привлекла <b>скучающая муха</b>";
 
-        GameUtils.Instance.FadeIn(textMiddle, 1f);
-        yield return new WaitForSeconds(1f);
+        GameUtils.Instance.FadeIn(textTop, 1f);
+
+        yield return new WaitForSeconds(2.5f);
+
+        GameUtils.Instance.FadeOut(textTop, 1f);
+
+        GameUtils.Instance.FadeOut(blackScreen, 1f);
+
+        yield return new WaitForSeconds(1.2f);
     }
-
-
 }

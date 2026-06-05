@@ -20,5 +20,14 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Muha.unity
     guid: 60381e2926982104fb9fce332908faa9
+  - enabled: 1
+    path: Assets/Scenes/Holodos.unity
+    guid: 78297fcab87f7e4499c511ce294e3732
+  - enabled: 1
+    path: Assets/Scenes/Ladder.unity
+    guid: bcd4adee39512d5479b40d5d121993e8
+  - enabled: 1
+    path: Assets/Scenes/Final.unity
+    guid: a165f904030e418428c9d53263bb5018
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
